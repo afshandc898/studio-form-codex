@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="iconGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2563EB"/>
+      <stop offset="100%" style="stop-color:#1E40AF"/>
+    </linearGradient>
+  </defs>
+  <rect width="32" height="32" rx="6" fill="url(#iconGrad)"/>
+  <path d="M8 14 L16 10 L16 20 L8 24 Z" fill="#60A5FA"/>
+  <path d="M24 14 L16 10 L16 20 L24 24 Z" fill="#93C5FD"/>
+  <path d="M8 14 L16 20 L24 14" fill="none" stroke="white" stroke-width="1.5" opacity="0.5"/>
+</svg>

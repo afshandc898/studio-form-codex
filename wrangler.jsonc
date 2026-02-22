@@ -1,0 +1,16 @@
+{
+  "name": "crateweb-website",
+  "compatibility_date": "2026-02-02",
+  "pages_build_output_dir": "./dist",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "crateweb-leads",
+      "database_id": "85f23083-1386-457d-986a-c11e84e7bb05"
+    }
+  ],
+  "vars": {
+    "POSTMARK_FROM_EMAIL": "hello@crateweb.com.au",
+    "POSTMARK_TO_EMAIL": "hello@crateweb.com.au"
+  }
+}

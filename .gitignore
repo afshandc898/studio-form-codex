@@ -1,0 +1,40 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Project files
+rewrite.md
+
+# Memory & credentials — never commit
+memory/CREDENTIALS.md
+memory/archive/
+memory/*.md
+!memory/2026-02-18.md
+!memory/2026-02-19.md
+
+# Sensitive local files
+*.env
+*.env.local
+*.pickle
+*_token.json
