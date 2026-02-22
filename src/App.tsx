@@ -3,18 +3,21 @@ import {
   ArrowUpRight,
   Building2,
   Instagram,
-  Linkedin,
   Leaf,
+  Linkedin,
   Menu,
   MoveRight,
   Sparkles,
   X,
 } from 'lucide-react'
 import { motion, useScroll, useTransform } from 'framer-motion'
+import { Section } from './components/Section'
+import { GlassCard } from './components/GlassCard'
 
 type NavLink = { label: string; href: string }
 type Pillar = { title: string; body: string; icon: ComponentType<{ className?: string }> }
 type Work = { title: string; type: string; year: string; location: string; span: string }
+
 type Step = { title: string; body: string }
 type Team = { name: string; role: string; bio: string }
 
@@ -28,18 +31,18 @@ const navLinks: NavLink[] = [
 
 const pillars: Pillar[] = [
   {
-    title: 'Minimalism',
-    body: 'We remove the unnecessary so light, shadow, and material can become the architecture.',
+    title: 'Spatial Clarity',
+    body: 'We strip noise away so light can script the day, and material can speak quietly.',
     icon: Sparkles,
   },
   {
-    title: 'Sustainability',
-    body: 'Passive solar performance, low-toxicity materials, and deeply efficient planning for long life.',
+    title: 'Low-Impact Living',
+    body: 'Passive-first planning, airtight envelopes, and healthy, low-toxicity material systems.',
     icon: Leaf,
   },
   {
-    title: 'Craft',
-    body: 'Every junction is resolved with care — concrete, timber, brass, and stone in quiet balance.',
+    title: 'Craft at Every Junction',
+    body: 'From shadow lines to thresholds, every detail is resolved for calm and longevity.',
     icon: Building2,
   },
 ]
@@ -54,191 +57,202 @@ const works: Work[] = [
 ]
 
 const steps: Step[] = [
-  { title: 'Consult', body: 'Site, brief, lifestyle and budget alignment.' },
-  { title: 'Concept', body: 'Spatial narratives, daylight testing, and mood studies.' },
-  { title: 'Design', body: 'Detailed documentation, planning, and consultant coordination.' },
-  { title: 'Build', body: 'Tender support, site reviews, and finish-level quality control.' },
+  { title: 'Consult', body: 'Brief, site and budget alignment with direct strategic recommendations.' },
+  { title: 'Concept', body: 'Options, daylight studies and material narratives shaped into one direction.' },
+  { title: 'Design', body: 'Approvals, consultant coordination, and precise construction documentation.' },
+  { title: 'Build', body: 'Tender review, site collaboration and finish-level quality stewardship.' },
 ]
 
 const team: Team[] = [
-  {
-    name: 'Amelia Hart',
-    role: 'Founding Director',
-    bio: 'Leads design direction with a focus on monolithic form, light modulation, and calm living.',
-  },
-  {
-    name: 'Noah Reeves',
-    role: 'Associate Architect',
-    bio: 'Specialises in sustainable systems, embodied carbon reduction, and passive house detailing.',
-  },
-  {
-    name: 'Sofia Lin',
-    role: 'Interiors & Materials',
-    bio: 'Curates tactile palettes with local stone, timber, and hand-finished surfaces.',
-  },
+  { name: 'Amelia Hart', role: 'Founding Director', bio: 'Leads monolithic form, light modulation, and calm spatial sequencing.' },
+  { name: 'Noah Reeves', role: 'Associate Architect', bio: 'Focuses on embodied-carbon reduction and high-performance detailing.' },
+  { name: 'Sofia Lin', role: 'Interiors & Materials', bio: 'Curates tactile palettes of stone, timber and hand-finished surfaces.' },
 ]
-
-const sectionReveal = {
-  hidden: { opacity: 0, y: 30 },
-  show: { opacity: 1, y: 0 },
-}
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
-  const year = useMemo(() => new Date().getFullYear(), [])
   const { scrollYProgress } = useScroll()
-  const heroY = useTransform(scrollYProgress, [0, 0.2], [0, -80])
+  const heroY = useTransform(scrollYProgress, [0, 0.35], [0, -120])
+  const year = useMemo(() => new Date().getFullYear(), [])
 
   return (
-    <div className="bg-[#1a1a1a] text-[#faf9f7] selection:bg-[#c75b39] selection:text-[#faf9f7]">
+    <div className="theme-obsidian min-h-screen bg-[#090b10] text-[#f5f1ea] selection:bg-[#e3a686] selection:text-[#090b10]">
+      <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+        <div className="aurora aurora-1" />
+        <div className="aurora aurora-2" />
+        <div className="noise-overlay" />
+      </div>
+
       <motion.header
-        initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#1a1a1a]/70 backdrop-blur-xl"
+        initial={{ opacity: 0, y: -24 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#090b10]/55 backdrop-blur-2xl"
       >
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-12">
-          <a href="#" className="font-serif text-xl tracking-[0.24em]">STUDIO FORM</a>
+          <a href="#hero" className="font-display text-xl tracking-[0.28em]">STUDIO FORM</a>
           <nav className="hidden items-center gap-8 md:flex">
             {navLinks.map((link) => (
-              <motion.a whileHover={{ y: -2, color: '#c75b39' }} key={link.href} href={link.href} className="text-sm uppercase tracking-[0.18em] text-[#faf9f7]/70 transition-colors">
+              <motion.a
+                key={link.href}
+                href={link.href}
+                whileHover={{ y: -2, color: '#f8b090' }}
+                className="text-sm uppercase tracking-[0.18em] text-white/70 transition-colors"
+              >
                 {link.label}
               </motion.a>
             ))}
           </nav>
-          <motion.button whileTap={{ scale: 0.96 }} whileHover={{ scale: 1.04 }} className="md:hidden" onClick={() => setMenuOpen((v) => !v)} aria-label="Toggle menu">
+          <button onClick={() => setMenuOpen((v) => !v)} className="md:hidden" aria-label="Toggle menu">
             {menuOpen ? <X /> : <Menu />}
-          </motion.button>
+          </button>
         </div>
-        <motion.div animate={{ height: menuOpen ? 'auto' : 0, opacity: menuOpen ? 1 : 0 }} className="overflow-hidden border-t border-white/10 bg-[#1a1a1a] md:hidden">
-          <div className="flex flex-col p-6">
+        <motion.div animate={{ height: menuOpen ? 'auto' : 0, opacity: menuOpen ? 1 : 0 }} className="overflow-hidden border-t border-white/10 bg-[#090b10]/95 md:hidden">
+          <div className="px-6 py-4">
             {navLinks.map((link) => (
-              <motion.a whileHover={{ x: 4, color: '#c75b39' }} key={link.href} href={link.href} onClick={() => setMenuOpen(false)} className="py-3 uppercase tracking-[0.16em] text-[#faf9f7]/75">
+              <a key={link.href} href={link.href} onClick={() => setMenuOpen(false)} className="block py-3 text-sm uppercase tracking-[0.16em] text-white/70">
                 {link.label}
-              </motion.a>
+              </a>
             ))}
           </div>
         </motion.div>
       </motion.header>
 
       <main>
-        <section className="relative flex min-h-screen items-end overflow-hidden px-6 pb-16 pt-32 lg:px-12" id="hero">
+        <section id="hero" className="relative flex min-h-screen items-end overflow-hidden px-6 pb-16 pt-32 lg:px-12">
           <motion.div style={{ y: heroY }} className="absolute inset-0">
-            <div className="h-full w-full bg-[radial-gradient(circle_at_20%_20%,rgba(199,91,57,0.26),transparent_35%),linear-gradient(130deg,#252525_5%,#1a1a1a_40%,#101010_100%)]" />
+            <div className="h-full w-full bg-[radial-gradient(circle_at_18%_16%,rgba(253,180,143,0.25),transparent_35%),radial-gradient(circle_at_85%_5%,rgba(141,196,255,0.15),transparent_28%),linear-gradient(130deg,#0d1016_5%,#090b10_56%,#06080d_100%)]" />
           </motion.div>
-          <div className="relative mx-auto grid w-full max-w-7xl gap-10 lg:grid-cols-2 lg:items-end">
-            <motion.div initial="hidden" animate="show" variants={sectionReveal} transition={{ duration: 0.8 }}>
-              <p className="mb-6 text-sm uppercase tracking-[0.2em] text-[#faf9f7]/70">Melbourne Architecture Studio</p>
-              <h1 className="font-serif text-5xl leading-[0.95] sm:text-7xl lg:text-8xl">Form Follows Light</h1>
-              <p className="mt-6 max-w-xl text-[#faf9f7]/75">Minimal, sustainable homes shaped by atmosphere, material honesty, and indoor-outdoor continuity.</p>
-              <motion.a whileHover={{ x: 4 }} href="#works" className="mt-10 inline-flex items-center gap-2 border-b border-[#c75b39] pb-1 text-sm uppercase tracking-[0.18em] text-[#c75b39]">
-                View Selected Works <MoveRight className="h-4 w-4" />
+
+          <div className="relative mx-auto grid w-full max-w-7xl gap-10 lg:grid-cols-[1.1fr_0.9fr]">
+            <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.75 }}>
+              <p className="text-sm uppercase tracking-[0.22em] text-white/65">Melbourne Architecture Studio</p>
+              <h1 className="mt-6 font-display text-5xl leading-[0.88] sm:text-7xl lg:text-8xl">Form, Atmosphere, Legacy.</h1>
+              <p className="mt-8 max-w-xl text-lg text-white/72">High-performance residential architecture with tactile material palettes, quiet luxury, and daylight-first planning.</p>
+              <motion.a whileHover={{ x: 4 }} href="#works" className="mt-10 inline-flex items-center gap-2 border-b border-[#f8b090] pb-1 text-sm uppercase tracking-[0.16em] text-[#f8b090]">
+                Explore Projects <MoveRight className="h-4 w-4" />
               </motion.a>
             </motion.div>
-            <motion.div initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.9, delay: 0.2 }} className="rounded-2xl border border-white/15 p-6 backdrop-blur-sm">
-              <div className="aspect-[4/5] rounded-xl bg-[linear-gradient(170deg,#2f2f2f_0%,#171717_100%)] p-6">
-                <div className="flex h-full items-end justify-between text-[#faf9f7]/65">
-                  <span className="font-serif text-3xl">Atmosphere Study</span>
-                  <span className="text-xs uppercase tracking-[0.16em]">Hero Visual</span>
+
+            <motion.div initial={{ opacity: 0, x: 28 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.2 }} className="glass-panel glass-cool p-6">
+              <div className="spotlight-frame aspect-[4/5] rounded-[1.4rem] p-6">
+                <div className="flex h-full flex-col justify-between text-white/70">
+                  <span className="text-xs uppercase tracking-[0.2em]">Atmosphere study</span>
+                  <span className="font-display text-3xl leading-tight">Stone, timber, and filtered western light.</span>
                 </div>
               </div>
             </motion.div>
           </div>
         </section>
 
-        <motion.section id="philosophy" className="mx-auto max-w-7xl px-6 py-24 lg:px-12" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} variants={sectionReveal} transition={{ duration: 0.6 }}>
-          <h2 className="font-serif text-4xl sm:text-5xl">Our Philosophy</h2>
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {pillars.map((pillar, index) => {
+        <Section.Root id="philosophy">
+          <Section.Header>
+            <Section.Kicker>Design Ethos</Section.Kicker>
+            <Section.Title>Architecture that feels inevitable.</Section.Title>
+            <Section.Lead>Our process balances emotional resonance and technical rigour so every space feels calm, clear and deeply livable.</Section.Lead>
+          </Section.Header>
+          <Section.Content className="grid gap-6 md:grid-cols-3">
+            {pillars.map((pillar, i) => {
               const Icon = pillar.icon
               return (
-                <motion.article key={pillar.title} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.12 }} whileHover={{ y: -8 }} className="group rounded-2xl border border-white/10 bg-[#222] p-8">
-                  <Icon className="h-7 w-7 text-[#c75b39]" />
-                  <h3 className="mt-10 font-serif text-3xl">{pillar.title}</h3>
-                  <motion.p initial={{ opacity: 0.6 }} whileHover={{ opacity: 1 }} className="mt-4 text-[#faf9f7]/70">
-                    {pillar.body}
-                  </motion.p>
-                  <div className="mt-8 h-px w-full bg-white/10 transition group-hover:bg-[#c75b39]/70" />
-                </motion.article>
+                <motion.div key={pillar.title} initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.12 }}>
+                  <GlassCard.Root toned="warm" className="h-full p-8">
+                    <Icon className="h-7 w-7 text-[#f8b090]" />
+                    <GlassCard.Eyebrow>Principle 0{i + 1}</GlassCard.Eyebrow>
+                    <GlassCard.Title>{pillar.title}</GlassCard.Title>
+                    <GlassCard.Body>{pillar.body}</GlassCard.Body>
+                  </GlassCard.Root>
+                </motion.div>
               )
             })}
-          </div>
-        </motion.section>
+          </Section.Content>
+        </Section.Root>
 
-        <section id="works" className="mx-auto max-w-7xl px-6 py-24 lg:px-12">
-          <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={sectionReveal}>
-            <h2 className="font-serif text-4xl sm:text-5xl">Selected Works</h2>
-          </motion.div>
-          <div className="mt-12 grid auto-rows-[220px] gap-4 md:grid-cols-3">
+        <Section.Root id="works">
+          <Section.Header>
+            <Section.Kicker>Portfolio</Section.Kicker>
+            <Section.Title>Selected Works</Section.Title>
+          </Section.Header>
+          <Section.Content className="grid auto-rows-[220px] gap-4 md:grid-cols-3">
             {works.map((item, index) => (
-              <motion.article key={item.title} initial={{ opacity: 0, scale: 0.98 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: index * 0.08 }} whileHover={{ scale: 1.01 }} className={`${item.span} group relative overflow-hidden rounded-2xl border border-white/10 bg-[linear-gradient(140deg,#313131,#1f1f1f)] p-6`}>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-transparent opacity-50" />
-                <motion.div initial={{ y: 10, opacity: 0.85 }} whileHover={{ y: 0, opacity: 1 }} className="relative flex h-full flex-col justify-end">
-                  <p className="text-xs uppercase tracking-[0.17em] text-[#faf9f7]/70">{item.type} · {item.year}</p>
-                  <h3 className="mt-2 font-serif text-2xl">{item.title}</h3>
-                  <p className="mt-2 text-sm text-[#faf9f7]/70">{item.location}</p>
-                </motion.div>
+              <motion.article
+                key={item.title}
+                initial={{ opacity: 0, scale: 0.97 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.08 }}
+                whileHover={{ y: -6 }}
+                className={`${item.span} group relative overflow-hidden rounded-[1.4rem] border border-white/15 bg-[linear-gradient(145deg,#1a2230,#11161f)] p-6`}
+              >
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,rgba(173,215,255,0.22),transparent_35%),linear-gradient(to_top,rgba(0,0,0,.65),transparent_52%)]" />
+                <div className="relative flex h-full flex-col justify-end">
+                  <p className="text-xs uppercase tracking-[0.18em] text-white/75">{item.type} · {item.year}</p>
+                  <h3 className="mt-2 font-display text-2xl leading-tight">{item.title}</h3>
+                  <p className="mt-2 text-sm text-white/70">{item.location}</p>
+                </div>
               </motion.article>
             ))}
-          </div>
-        </section>
+          </Section.Content>
+        </Section.Root>
 
-        <section id="process" className="overflow-x-clip py-24">
-          <div className="mx-auto max-w-7xl px-6 lg:px-12">
-            <motion.h2 initial="hidden" whileInView="show" viewport={{ once: true }} variants={sectionReveal} className="font-serif text-4xl sm:text-5xl">Process</motion.h2>
-            <div className="mt-12 grid gap-4 md:grid-cols-4">
-              {steps.map((step, index) => (
-                <motion.article key={step.title} initial={{ opacity: 0, x: 24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }} whileHover={{ y: -6 }} className="rounded-2xl border border-white/10 bg-[#212121] p-8">
-                  <p className="text-xs uppercase tracking-[0.16em] text-[#c75b39]">0{index + 1}</p>
-                  <h3 className="mt-5 font-serif text-3xl">{step.title}</h3>
-                  <p className="mt-4 text-[#faf9f7]/70">{step.body}</p>
-                </motion.article>
-              ))}
-            </div>
-          </div>
-        </section>
+        <Section.Root id="process">
+          <Section.Header>
+            <Section.Kicker>Method</Section.Kicker>
+            <Section.Title>From brief to built form.</Section.Title>
+          </Section.Header>
+          <Section.Content className="grid gap-4 md:grid-cols-4">
+            {steps.map((step, index) => (
+              <GlassCard.Root key={step.title} toned={index % 2 === 0 ? 'warm' : 'cool'} className="p-8">
+                <GlassCard.Eyebrow>0{index + 1}</GlassCard.Eyebrow>
+                <GlassCard.Title>{step.title}</GlassCard.Title>
+                <GlassCard.Body>{step.body}</GlassCard.Body>
+              </GlassCard.Root>
+            ))}
+          </Section.Content>
+        </Section.Root>
 
-        <section id="team" className="mx-auto max-w-7xl px-6 py-24 lg:px-12">
-          <motion.h2 initial="hidden" whileInView="show" viewport={{ once: true }} variants={sectionReveal} className="font-serif text-4xl sm:text-5xl">Team</motion.h2>
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {team.map((member, index) => (
-              <motion.article key={member.name} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }} whileHover={{ y: -6 }} className="group overflow-hidden rounded-2xl border border-white/10 bg-[#232323]">
-                <div className="aspect-[3/4] bg-[linear-gradient(160deg,#3a3a3a,#232323)] p-6">
-                  <p className="font-serif text-2xl text-[#faf9f7]/70">Portrait</p>
+        <Section.Root id="team">
+          <Section.Header>
+            <Section.Kicker>People</Section.Kicker>
+            <Section.Title>The studio team</Section.Title>
+          </Section.Header>
+          <Section.Content className="grid gap-6 md:grid-cols-3">
+            {team.map((member, i) => (
+              <motion.article key={member.name} initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} className="glass-panel glass-cool overflow-hidden">
+                <div className="aspect-[3/4] bg-[linear-gradient(165deg,#2a3346,#1b2330)] p-6">
+                  <p className="font-display text-2xl text-white/75">Portrait</p>
                 </div>
                 <div className="p-6">
-                  <h3 className="font-serif text-2xl">{member.name}</h3>
-                  <p className="mt-1 text-sm uppercase tracking-[0.14em] text-[#c75b39]">{member.role}</p>
-                  <motion.p initial={{ opacity: 0.7 }} whileHover={{ opacity: 1 }} className="mt-4 text-[#faf9f7]/70">{member.bio}</motion.p>
+                  <h3 className="font-display text-2xl">{member.name}</h3>
+                  <p className="mt-2 text-xs uppercase tracking-[0.16em] text-[#add7ff]">{member.role}</p>
+                  <p className="mt-4 text-white/72">{member.bio}</p>
                 </div>
               </motion.article>
             ))}
-          </div>
-        </section>
+          </Section.Content>
+        </Section.Root>
 
-        <section id="contact" className="border-y border-white/10 bg-[#171717] py-24">
+        <section id="contact" className="border-y border-white/10 bg-[#0b0f16]/80 py-24 backdrop-blur-xl">
           <div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-2 lg:px-12">
-            <motion.div initial={{ opacity: 0, x: -24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-              <h2 className="font-serif text-4xl sm:text-5xl">Start Your Project</h2>
-              <p className="mt-6 text-[#faf9f7]/75">Collingwood, Melbourne — Available for custom residential projects across Victoria.</p>
-              <div className="mt-10 aspect-[16/10] rounded-2xl border border-white/15 bg-[linear-gradient(145deg,#2c2c2c,#1f1f1f)] p-6 text-[#faf9f7]/65">
-                Map Placeholder · Collingwood VIC
-              </div>
-            </motion.div>
+            <div>
+              <p className="text-xs uppercase tracking-[0.24em] text-white/60">Contact</p>
+              <h2 className="mt-5 font-display text-5xl leading-[0.95]">Start your project</h2>
+              <p className="mt-6 text-white/72">Collingwood, Melbourne — available for custom residential work across Victoria.</p>
+            </div>
 
-            <motion.form initial={{ opacity: 0, x: 24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="space-y-4 rounded-2xl border border-white/10 bg-[#1d1d1d] p-8">
+            <motion.form initial={{ opacity: 0, x: 16 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="glass-panel glass-warm space-y-4 p-8">
               {['Name', 'Email', 'Project Type'].map((label) => (
-                <motion.label whileFocus={{ scale: 1.01 }} key={label} className="block text-sm uppercase tracking-[0.14em] text-[#faf9f7]/70">
+                <label key={label} className="block text-sm uppercase tracking-[0.14em] text-white/70">
                   {label}
-                  <input className="mt-2 w-full border-b border-white/25 bg-transparent py-3 text-base text-[#faf9f7] outline-none placeholder:text-[#faf9f7]/35 focus:border-[#c75b39]" placeholder={label} />
-                </motion.label>
+                  <input className="mt-2 w-full border-b border-white/25 bg-transparent py-3 text-base text-white outline-none placeholder:text-white/40 focus:border-[#f8b090]" placeholder={label} />
+                </label>
               ))}
-              <label className="block text-sm uppercase tracking-[0.14em] text-[#faf9f7]/70">
+              <label className="block text-sm uppercase tracking-[0.14em] text-white/70">
                 Vision
-                <textarea rows={4} className="mt-2 w-full border border-white/20 bg-transparent p-3 text-base text-[#faf9f7] outline-none placeholder:text-[#faf9f7]/35 focus:border-[#c75b39]" placeholder="Tell us about your site, timeline, and ambitions." />
+                <textarea rows={4} className="mt-2 w-full rounded-xl border border-white/20 bg-transparent p-3 text-base text-white outline-none placeholder:text-white/40 focus:border-[#f8b090]" placeholder="Tell us about your site, timeline, and ambitions." />
               </label>
-              <motion.button whileHover={{ y: -2 }} whileTap={{ scale: 0.98 }} className="inline-flex items-center gap-2 rounded-full border border-[#c75b39] px-6 py-3 text-sm uppercase tracking-[0.17em] text-[#c75b39]">
+              <button className="inline-flex items-center gap-2 rounded-full border border-[#f8b090] px-6 py-3 text-sm uppercase tracking-[0.16em] text-[#f8b090]">
                 Send Enquiry <ArrowUpRight className="h-4 w-4" />
-              </motion.button>
+              </button>
             </motion.form>
           </div>
         </section>
@@ -247,24 +261,24 @@ function App() {
       <footer className="mx-auto max-w-7xl px-6 py-10 lg:px-12">
         <div className="grid gap-8 md:grid-cols-3 md:items-end">
           <div>
-            <p className="font-serif text-2xl">STUDIO FORM</p>
-            <p className="mt-2 text-sm text-[#faf9f7]/65">Architecture for light, longevity, and calm living.</p>
+            <p className="font-display text-2xl">STUDIO FORM</p>
+            <p className="mt-2 text-sm text-white/65">Architecture for light, longevity, and calm living.</p>
           </div>
           <div className="flex items-center gap-4 md:justify-center">
             {[Instagram, Linkedin].map((Icon, i) => (
-              <motion.a key={i} whileHover={{ y: -2, color: '#c75b39' }} href="#" className="text-[#faf9f7]/70">
+              <a key={i} href="#" className="text-white/70 transition hover:-translate-y-0.5 hover:text-[#f8b090]">
                 <Icon className="h-5 w-5" />
-              </motion.a>
+              </a>
             ))}
           </div>
-          <motion.form whileHover={{ y: -2 }} className="flex items-center gap-2 border-b border-white/25 pb-2">
-            <input className="w-full bg-transparent text-sm text-[#faf9f7] outline-none placeholder:text-[#faf9f7]/40" placeholder="Newsletter email" />
-            <button className="text-[#c75b39]">
+          <form className="flex items-center gap-2 border-b border-white/25 pb-2">
+            <input className="w-full bg-transparent text-sm text-white outline-none placeholder:text-white/40" placeholder="Newsletter email" />
+            <button className="text-[#f8b090]">
               <ArrowUpRight className="h-4 w-4" />
             </button>
-          </motion.form>
+          </form>
         </div>
-        <p className="mt-8 text-xs uppercase tracking-[0.14em] text-[#faf9f7]/40">© {year} Studio Form · Melbourne</p>
+        <p className="mt-8 text-xs uppercase tracking-[0.14em] text-white/40">© {year} Studio Form · Melbourne</p>
       </footer>
     </div>
   )

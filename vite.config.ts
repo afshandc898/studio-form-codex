@@ -1,20 +1,28 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vite.dev/config/
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [react()],
+  resolve: {
+    alias: {
+      '@': '/src',
+    },
+  },
   build: {
-    sourcemap: true,
+    target: 'es2022',
+    sourcemap: mode !== 'production',
+    cssCodeSplit: true,
+    modulePreload: {
+      polyfill: false,
+    },
     rollupOptions: {
       output: {
         manualChunks: {
-          'framer-motion': ['framer-motion'],
+          react: ['react', 'react-dom'],
+          motion: ['framer-motion'],
+          icons: ['lucide-react'],
         },
       },
     },
   },
-  css: {
-    devSourcemap: true,
-  },
-})
+}))
